@@ -1,10 +1,9 @@
 '''
-    Read an FSPS spec file
-    '''
-
+Read an FSPS spec file
+'''
 class specmodel:
     def __init__(self, attr, wave, flux):
-        self.age = attr[0]
+        self.agegyr = round(10**attr[0] / 1e9, 3)
         self.mass = attr[1]
         self.lbol= attr[2]
         self.sfr= attr[3]
@@ -19,38 +18,38 @@ class readspec:
             line = self.data.readline()
             if line[0] != '#':
                 break
-        
+
         cols = line.split()
         self.tstep = float(cols[0])
         self.sdim = float(cols[1])
-        
+
         # Get wavelength
         line = self.data.readline()
         cols = line.split()
-        self.wave = map(lambda col: float(col), cols)
-    
+        self.wave = map(lambda col: float(col)*1e-4, cols)
+
     def next(self):
         line = self.data.readline()
         if line == "":
             self.data.close()
             raise StopIteration()
-        
+
         cols = line.split()
         attr = map(lambda col: float(col), cols)
-        
+
         line = self.data.readline()
         cols = line.split()
         flux = map(lambda col: float(col), cols)
-        
+
         return specmodel(attr, self.wave, flux)
-    
+
     def __iter__(self):
         return self
 
 '''
-    For FSPS .mags files
-    '''
-class FSPSmags:
+For FSPS .mags files
+'''
+class readmags:
     def __init__(self, line):
         self.line = line
         cols = line.split()
