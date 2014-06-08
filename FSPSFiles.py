@@ -1,3 +1,5 @@
+import os
+
 '''
 Read an FSPS spec file
 '''
@@ -71,13 +73,15 @@ class readmags:
         # Read in and assign the  attributes of the models
         cols = line.split()
         for i, name in enumerate(self.header):
-            self.__dict__[name] = cols[i]
+            self.__dict__[name] = float(cols[i])
 
         # Update the attributes with filter names and values
-        with open('filters.txt', 'r') as names:
+        with open('/Users/alexawork/FSPS_python/filters.txt', 'r') as names:
             for i, _filter in enumerate(names):
                 _filter = _filter.rstrip()
-                self.__dict__.update({_filter:cols[i + len(self.header)]})
+                self.__dict__.update({_filter:float(cols[i + len(self.header)])})
+
+        return self.__dict__
 
     def __iter__(self):
         return self
