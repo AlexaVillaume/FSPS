@@ -54,7 +54,8 @@ class readmags:
         # Read header to find the columns in the file
         while True:
             line = self.data.readline()
-            if line[0] == '#' or  line[1] == '#':
+            line = line.lstrip()
+            if line[0] == '#':
                 header = line.replace('#', '')
                 header = header.replace('mags', '')
                 header =  header.split()
