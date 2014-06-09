@@ -81,7 +81,7 @@ class readmags:
                 _filter = _filter.rstrip()
                 self.__dict__.update({_filter:float(cols[i + len(self.header)])})
 
-        return self.__dict__
+        return self.__dict__.copy()
 
     def __iter__(self):
         return self
