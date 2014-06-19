@@ -87,29 +87,6 @@ class readcmd:
     def __iter__(self):
         return self
 
-
-
-class test:
-    def __init__(self, fname):
-        self.data = open(fname, 'r')
-        x = 0
-        while True:
-            if x < 7:
-                print "skipping this line"
-                self.data.readline()
-            else:
-                line = self.data.readline()
-                line = line.lstrip()
-                if line[0] == '#':
-                    header = line.replace('#', '')
-                    header = header.replace('mags', '')
-                    header = header.replace('(see FILTER_LIST)', '')
-                    header = header.split()
-                    break
-            x+=1
-
-        print header
-
 '''
 For FSPS .mags files
 '''
