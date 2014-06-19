@@ -48,9 +48,9 @@ class readspec(object):
         return self
 
 '''
-For FSPS .mags and .cmd files
+For FSPS .cmd files
 '''
-class readmags:
+class readcmd:
     def __init__(self, fname):
         self.data = open(fname, 'r')
         # Read header to find the columns in the file
@@ -79,6 +79,76 @@ class readmags:
         with open('/Users/alexawork/FSPS_python/filters.txt', 'r') as names:
             for i, _filter in enumerate(names):
                 _filter = _filter.rstrip()
+                #print _filter, cols[i + len(self.header)]
+                self.__dict__.update({_filter:float(cols[i + len(self.header)])})
+
+        return self.__dict__.copy()
+
+    def __iter__(self):
+        return self
+
+
+
+class test:
+    def __init__(self, fname):
+        self.data = open(fname, 'r')
+        x = 0
+        while True:
+            if x < 7:
+                print "skipping this line"
+                self.data.readline()
+            else:
+                line = self.data.readline()
+                line = line.lstrip()
+                if line[0] == '#':
+                    header = line.replace('#', '')
+                    header = header.replace('mags', '')
+                    header = header.replace('(see FILTER_LIST)', '')
+                    header = header.split()
+                    break
+            x+=1
+
+        print header
+
+'''
+For FSPS .mags files
+'''
+class readmags:
+    def __init__(self, fname):
+        self.data = open(fname, 'r')
+        # Read header to find the columns in the file
+        line_count = 0
+        while True:
+            if line_count < 7:
+                self.data.readline()
+            else:
+                line = self.data.readline()
+                line = line.lstrip()
+                if line[0] == '#':
+                    header = line.replace('#', '')
+                    header = header.replace('mags', '')
+                    header = header.replace('(see FILTER_LIST)', '')
+                    header =  header.split()
+                    break
+            line_count+=1
+        self.header = header
+
+    def next(self):
+        line = self.data.readline()
+        if line == "":
+            self.data.close()
+            raise StopIteration()
+
+        # Read in and assign the  attributes of the models
+        cols = line.split()
+        for i, name in enumerate(self.header):
+            self.__dict__[name] = float(cols[i])
+
+        # Update the attributes with filter names and values
+        with open('/Users/alexawork/FSPS_python/filters.txt', 'r') as names:
+            for i, _filter in enumerate(names):
+                _filter = _filter.rstrip()
+                #print _filter, cols[i + len(self.header)]
                 self.__dict__.update({_filter:float(cols[i + len(self.header)])})
 
         return self.__dict__.copy()
