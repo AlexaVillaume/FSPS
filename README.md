@@ -16,6 +16,6 @@ import FSPSFiles
 
 This will allow you to read in the outfiles. For example,
 
-'''python
+```python
 test = FSPSFiles.readcmd(<fname.cmd>)
-'''
+```
