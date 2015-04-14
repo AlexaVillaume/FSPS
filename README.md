@@ -10,9 +10,9 @@ FSPSFiles contains classes easily reading and working with FSPS output files (.m
 
 Put this directory in your Python path and then in any program you can import the program,
 
-'''python
+```python
 import FSPSFiles
-'''
+```
 
 This will allow you to read in the outfiles. For example,
 
