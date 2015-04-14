@@ -1,4 +1,4 @@
-FSPS
+FSPS Files
 ====
 
 
@@ -27,3 +27,21 @@ Doing this returns class instances of whatever file you're reading in. It's impo
 headers of the FSPS outfiles and organizes the data such that you can select based on those attributes.
 
 ## Examples
+```python
+test = FSPSFiles.readcmd(<fname.cmd>)
+smc_agb_84 =[]
+for model in test:
+    if model['phase'] != 6.0:
+        if model['age'] == 8.7:
+            smc_agb_84.append(model)
+```
+
+So as you can see you see you can select on any of the attributes given in the .cmd header. In this case I'm making a phase selection and the
+selecting based on age. The ```smc_agb_84``` array now contains the magnitudes for all the filters that FSPS supports. If I want to select a certain
+filter I can do the follow, 
+
+```python
+smc_nod_84_twom_j = map(lambda source: source['twomass_j'] + smc_distmod, smc_nod_84)
+```
+
+Which gives me the J-band photometry for all the stars in a population of log age = 8.4 for every phase except 6.
