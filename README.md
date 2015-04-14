@@ -2,4 +2,16 @@ FSPS
 ====
 
 
-### What is this?
+### What this is
+
+FSPSFiles contains classes easily reading and working with FSPS output files (.mags, .spec, and .cmd)
+
+### How to the routines 
+
+Put this directory in your Python path and then in any program you can say,
+
+import FSPSFiles 
+
+This will allow you to read in the outfiles. For example,
+
+test = FSPSFiles.readcmd(<fname.cmd>)
